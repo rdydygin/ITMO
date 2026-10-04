@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "author": "Uri Shaked",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-st-nucleo-c031c6",
+      "id": "nucleo",
+      "top": -47.17,
+      "left": -202.58,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": 73.2,
+      "left": 81,
+      "attrs": { "color": "limegreen", "flip": "1" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": 43.2,
+      "left": 124.25,
+      "rotate": 90,
+      "attrs": { "value": "1000" }
+    },
+    {
+      "type": "wokwi-tm1637-7segment",
+      "id": "sevseg1",
+      "top": -124.84,
+      "left": -453.77,
+      "attrs": { "color": "red" }
+    },
+    {
+      "type": "wokwi-membrane-keypad",
+      "id": "keypad1",
+      "top": -453.2,
+      "left": 163.5,
+      "attrs": { "columns": "3" }
+    }
+  ],
+  "connections": [
+    [ "$serialMonitor:TX", "nucleo:PA3", "", [] ],
+    [ "$serialMonitor:RX", "nucleo:PA2", "", [] ],
+    [ "nucleo:PA5", "led1:A", "green", [ "h0" ] ],
+    [ "led1:C", "r1:2", "green", [ "h47.6", "v-67.2" ] ],
+    [ "nucleo:GND.5", "r1:1", "black", [ "h-76.35", "v-220.8", "h326.4" ] ],
+    [ "nucleo:PA6", "sevseg1:CLK", "green", [ "h150.95", "v-345.6" ] ],
+    [ "nucleo:PA7", "sevseg1:DIO", "green", [ "h170.15", "v-345.6" ] ],
+    [ "nucleo:3V3.2", "sevseg1:VCC", "green", [ "h-47.55", "v-336" ] ],
+    [ "nucleo:GND.5", "sevseg1:GND", "black", [ "h0" ] ],
+    [ "keypad1:R1", "nucleo:PB7", "green", [ "v0" ] ],
+    [ "keypad1:R2", "nucleo:PB6", "green", [ "v0" ] ],
+    [ "keypad1:R3", "nucleo:PA10", "green", [ "v0" ] ],
+    [ "keypad1:R4", "nucleo:PB3", "green", [ "v0" ] ],
+    [ "keypad1:C1", "nucleo:PB10", "green", [ "v326.4", "h-237.45" ] ],
+    [ "keypad1:C2", "nucleo:PB4", "green", [ "v0" ] ],
+    [ "keypad1:C3", "nucleo:PB5", "green", [ "v0" ] ]
+  ],
+  "dependencies": {}
+}
