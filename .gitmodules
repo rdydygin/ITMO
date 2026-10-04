@@ -37,3 +37,6 @@
 [submodule "Semester4/CSA/Labwork4"]
 	path = Semester4/CSA/Labwork4
 	url = git@github.com:rmntim/csa-lab4.git
+[submodule "Semester5/OS-new"]
+	path = Semester5/OS-new
+	url = git@github.com:rdydygin/itmo-os.git
