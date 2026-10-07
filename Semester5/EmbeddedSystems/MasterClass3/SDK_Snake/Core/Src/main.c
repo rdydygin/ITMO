@@ -55,6 +55,7 @@
 #include "gpio.h"
 #include "i2c.h"
 #include "oled.h"
+#include "buzzer.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -131,6 +132,7 @@ int main(void)
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */
+  Buzzer_Init();
   MX_FREERTOS_Init(); 
   /* Start scheduler */
   osKernelStart();

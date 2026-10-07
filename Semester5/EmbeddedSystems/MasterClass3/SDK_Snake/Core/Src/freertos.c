@@ -8,15 +8,19 @@
 #include "snake.h"
 #include "keyboard.h"
 #include "oled.h"
+#include "buzzer.h"
 #include <stdio.h>
 
 enum { CMD_UP, CMD_RIGHT, CMD_DOWN, CMD_LEFT, CMD_PAUSE, CMD_RESTART };
-static QueueHandle_t commands, frames;
+enum { SOUND_START, SOUND_PAUSE, SOUND_RESTART, SOUND_FOOD, SOUND_LOST, SOUND_WON };
+static QueueHandle_t commands, frames, sounds;
 static SemaphoreHandle_t i2c_mutex;
 static SnakeGame game; /* Only GameTask owns the mutable game state. */
 static void InputTask(void const *argument);
 static void GameTask(void const *argument);
 static void DisplayTask(void const *argument);
+static void SoundTask(void const *argument);
+static void sound_event(uint8_t event) { (void)xQueueSend(sounds, &event, 0); }
 static StaticTask_t idle_tcb;
 static StackType_t idle_stack[configMINIMAL_STACK_SIZE];
 void vApplicationGetIdleTaskMemory(StaticTask_t **tcb, StackType_t **stack, uint32_t *size) {
@@ -25,11 +29,14 @@ void vApplicationGetIdleTaskMemory(StaticTask_t **tcb, StackType_t **stack, uint
 void MX_FREERTOS_Init(void) {
     commands = xQueueCreate(8, sizeof(uint8_t));
     frames = xQueueCreate(1, sizeof(SnakeGame));
+    sounds = xQueueCreate(8, sizeof(uint8_t));
     i2c_mutex = xSemaphoreCreateMutex();
-    configASSERT(commands && frames && i2c_mutex);
+    configASSERT(commands && frames && sounds && i2c_mutex);
     osThreadDef(Input, InputTask, osPriorityAboveNormal, 0, 256);
     osThreadDef(Game, GameTask, osPriorityNormal, 0, 256);
     osThreadDef(Display, DisplayTask, osPriorityBelowNormal, 0, 512);
+    osThreadDef(Sound, SoundTask, osPriorityBelowNormal, 0, 256);
+    configASSERT(osThreadCreate(osThread(Sound), NULL));
     configASSERT(osThreadCreate(osThread(Input), NULL));
     configASSERT(osThreadCreate(osThread(Game), NULL));
     configASSERT(osThreadCreate(osThread(Display), NULL));
@@ -74,15 +81,25 @@ static void GameTask(void const *argument) {
         TickType_t now = xTaskGetTickCount();
         while (xQueueReceive(commands, &command, 0) == pdPASS) {
             if (command <= CMD_LEFT) snake_turn(&game, (SnakeDirection)command);
-            else if (command == CMD_PAUSE) { snake_pause(&game); last_step = now; changed = 1; }
+            else if (command == CMD_PAUSE) {
+                SnakeStatus before = game.status;
+                snake_pause(&game); last_step = now; changed = 1;
+                if (game.status != before)
+                    sound_event(game.status == SNAKE_PAUSED ? SOUND_PAUSE : SOUND_START);
+            }
             else if (command == CMD_RESTART) {
                 snake_init(&game, game.rng ^ now); game.status = SNAKE_PAUSED;
                 last_step = now; changed = 1;
+                xQueueReset(sounds); sound_event(SOUND_RESTART);
                 xQueueReset(commands); break;
             }
         }
         if (game.status == SNAKE_RUNNING && now - last_step >= pdMS_TO_TICKS(snake_period_ms(&game))) {
+            uint16_t score = game.score;
             snake_step(&game); last_step = now; changed = 1;
+            if (game.status == SNAKE_LOST) sound_event(SOUND_LOST);
+            else if (game.status == SNAKE_WON) sound_event(SOUND_WON);
+            else if (game.score != score) sound_event(SOUND_FOOD);
         }
         if (changed) xQueueOverwrite(frames, &game);
         vTaskDelayUntil(&wake, pdMS_TO_TICKS(10));
@@ -119,6 +136,25 @@ static void DisplayTask(void const *argument) {
             oled_UpdatePage(page);
             xSemaphoreGive(i2c_mutex);
             vTaskDelay(pdMS_TO_TICKS(1));
+        }
+    }
+}
+
+static void SoundTask(void const *argument) {
+    (void)argument;
+    static const uint16_t tones[][4] = {
+        {523, 784, 0, 0}, {392, 0, 0, 0}, {659, 523, 0, 0},
+        {1047, 1568, 0, 0}, {440, 330, 220, 0}, {523, 659, 784, 1047}
+    };
+    for (;;) {
+        uint8_t event;
+        xQueueReceive(sounds, &event, portMAX_DELAY);
+        if (event > SOUND_WON) continue;
+        for (unsigned i = 0; i < 4 && tones[event][i]; ++i) {
+            Buzzer_Set_Freq(tones[event][i]);
+            vTaskDelay(pdMS_TO_TICKS(event == SOUND_LOST ? 120 : 70));
+            Buzzer_Set_Freq(0);
+            vTaskDelay(pdMS_TO_TICKS(15));
         }
     }
 }

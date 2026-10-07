@@ -104,3 +104,5 @@ clang -std=c11 -Wall -Wextra -Werror -fsanitize=address,undefined \
 - `tests/test_snake.c` — проверки игровой логики.
 
 Лицензионные уведомления исходных библиотек сохранены в их файлах.
+
+Звук: пример SDK_Buzzer, TIM2_CH1 / PA5, отдельная задача Sound и очередь sounds (8 событий). Сигналы старта, паузы, перезапуска, еды, проигрыша и победы; задержки нот через vTaskDelay. Один общий i2c_mutex используется Input и Display.
