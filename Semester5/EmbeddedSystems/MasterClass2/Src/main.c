@@ -173,7 +173,7 @@ static void DisplayLine(uint8_t y, char *text) {
 static void Calculator_Display(void) {
     char text[19];
     oled_Fill(Black);
-    DisplayLine(0, "INTEGER111 CALCULATOR");
+    DisplayLine(0, "INTEGER CALCULATOR");
     snprintf(text, sizeof(text), "A: %s%ld", calculator.a == 0 && !calculator.operand && calculator.negative ? "-" : "", (long)calculator.a);
     DisplayLine(12, text);
     snprintf(text, sizeof(text), "%c B: %s%ld", calculator.op, calculator.b == 0 && calculator.operand && calculator.negative ? "-" : "", (long)calculator.b);
