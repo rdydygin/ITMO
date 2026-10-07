@@ -1,0 +1,15 @@
+{
+  "reference_sha256": "d94d48ae35c46e2a0fffd7ca4a116ca0d01dd800ee5c76904d9caff466bec581",
+  "changed_parts": [
+    "docProps/core.xml",
+    "word/document.xml",
+    "word/_rels/document.xml.rels",
+    "word/media/image6.png",
+    "word/media/image7.png",
+    "word/media/image8.png",
+    "word/media/image9.png",
+    "word/media/image10.png",
+    "word/media/image11.png"
+  ],
+  "preserve_only_parts": "unchanged"
+}

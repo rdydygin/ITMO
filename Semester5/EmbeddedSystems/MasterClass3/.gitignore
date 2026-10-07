@@ -1,0 +1,5 @@
+upstream/
+SDK_Snake/build/
+SDK_Snake/Debug/
+SDK_Snake/Release/
+.DS_Store
