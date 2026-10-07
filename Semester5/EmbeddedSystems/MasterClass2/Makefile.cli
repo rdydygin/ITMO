@@ -1,0 +1,34 @@
+.DEFAULT_GOAL := all
+TOOLCHAIN_PREFIX ?= arm-none-eabi-
+CC := $(TOOLCHAIN_PREFIX)gcc
+OBJCOPY := $(TOOLCHAIN_PREFIX)objcopy
+SIZE := $(TOOLCHAIN_PREFIX)size
+BUILD := build
+TARGET := $(BUILD)/SDK_Keyboard
+HAL_DIR := Drivers/STM32F4xx_HAL_Driver
+HAL_MODULES := hal hal_cortex hal_dma hal_dma_ex hal_exti hal_flash hal_flash_ex hal_flash_ramfunc hal_gpio hal_i2c hal_i2c_ex hal_pwr hal_pwr_ex hal_rcc hal_rcc_ex hal_tim hal_tim_ex hal_uart
+C_SOURCES := $(wildcard Src/*.c) $(addprefix $(HAL_DIR)/Src/stm32f4xx_,$(addsuffix .c,$(HAL_MODULES)))
+ASM_SOURCES := startup/startup_stm32f407xx.s
+OBJECTS := $(addprefix $(BUILD)/,$(C_SOURCES:.c=.o) $(ASM_SOURCES:.s=.o))
+CPU := -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard
+CPPFLAGS := -DUSE_HAL_DRIVER -DSTM32F407xx -D'__weak=__attribute__((weak))' -D'__packed=__attribute__((__packed__))' -IInc -I$(HAL_DIR)/Inc -I$(HAL_DIR)/Inc/Legacy -IDrivers/CMSIS/Device/ST/STM32F4xx/Include -IDrivers/CMSIS/Include
+CFLAGS := $(CPU) -std=gnu11 -Og -g3 -Wall -ffunction-sections -fdata-sections --specs=nano.specs -MMD -MP
+LDFLAGS := $(CPU) -TSTM32F407VGTx_FLASH.ld --specs=nosys.specs --specs=nano.specs -static -Wl,-Map=$(TARGET).map -Wl,--gc-sections
+.PHONY: all clean
+all: $(TARGET).elf $(TARGET).hex $(TARGET).bin
+	@$(SIZE) $(TARGET).elf
+$(TARGET).elf: $(OBJECTS) STM32F407VGTx_FLASH.ld Makefile.cli
+	$(CC) $(OBJECTS) $(LDFLAGS) -Wl,--start-group -lc -lm -Wl,--end-group -o $@
+$(BUILD)/%.o: %.c Makefile.cli
+	@mkdir -p $(dir $@)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+$(BUILD)/%.o: %.s Makefile.cli
+	@mkdir -p $(dir $@)
+	$(CC) $(CPU) -g3 -x assembler-with-cpp -MMD -MP -c $< -o $@
+$(TARGET).hex: $(TARGET).elf
+	$(OBJCOPY) -O ihex $< $@
+$(TARGET).bin: $(TARGET).elf
+	$(OBJCOPY) -O binary $< $@
+clean:
+	rm -rf $(BUILD)
+-include $(OBJECTS:.o=.d)

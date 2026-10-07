@@ -1,0 +1,30 @@
+@startuml
+hide footbox
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+participant "Ядро\nCortex M4" as CPU
+participant "PCA9538\n0x71" as IO
+participant "Клавиатура\n4 x 3" as KB
+participant "OLED\n0x3C" as OLED
+note over CPU,OLED : PCA9538 и OLED подключены к I2C1 PB8 SCL PB9 SDA
+loop Основной цикл
+loop Каждая из четырех строк
+CPU -> IO : I2C1 запись POLARITY OUTPUT CONFIG
+IO -> KB : Установить активную строку в 0
+KB --> IO : Уровни столбцов
+CPU -> IO : I2C1 чтение INPUT_PORT
+IO --> CPU : Байт состояния
+end
+CPU -> CPU : Проверить стабильность 30 мс
+alt Отпускание после короткого нажатия
+CPU -> CPU : Цифра или выбор операции или вычисление
+else Удержание звезды или решетки 700 мс
+CPU -> CPU : Очистка или смена знака
+end
+opt Изменилось состояние калькулятора
+CPU -> CPU : Сформировать текст и буфер OLED
+CPU -> OLED : I2C1 команды и 8 страниц по 128 байт
+end
+CPU -> CPU : HAL_Delay 5 мс
+end
+@enduml

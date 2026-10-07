@@ -1,0 +1,8 @@
+start		a=0 b=0 op=+ done=0 error=0 result=0
+input	12*34	a=12 b=34 op=+ done=0 error=0 result=0
+add	12*34#	a=12 b=34 op=+ done=1 error=0 result=46
+subtract	12**34#	a=12 b=34 op=- done=1 error=0 result=-22
+multiply	12***34#	a=12 b=34 op=* done=1 error=0 result=408
+negative	12***N3#	a=12 b=-3 op=* done=1 error=0 result=-36
+overflow	2147483647*1#	a=2147483647 b=1 op=+ done=0 error=1 result=0
+clear	12*34#C	a=0 b=0 op=+ done=0 error=0 result=0

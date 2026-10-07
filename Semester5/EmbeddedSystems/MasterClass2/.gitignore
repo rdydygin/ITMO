@@ -1,0 +1,11 @@
+*.o
+*.d
+*.su
+*.cyclo
+*.elf
+*.hex
+*.map
+*.log
+SDK_Keyboard.list
+
+/build/

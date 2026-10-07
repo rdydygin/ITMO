@@ -1,0 +1,55 @@
+@startuml
+hide footbox
+skinparam monochrome true
+skinparam defaultFontName DejaVu Sans
+participant "SysTick" as T
+participant "Процессор\nSTM32C031" as CPU
+participant "GPIOA GPIOB" as G
+participant "Клавиатура\n4 на 3" as K
+participant "TM1637" as D
+participant "USART2" as U
+participant "Serial Monitor" as S
+CPU -> G: Тактирование RCC и настройка выводов
+CPU -> U: PA2 PA3 AF1, 115200 бод, передатчик
+CPU -> D: PA6 CLK и PA7 DIO\n0x40, 0xC0 и данные, 0x8F; очистка
+CPU -> U: Приветствие через printf и _write
+U -> S: Передача символов
+CPU -> T: LOAD = 47999, период 1 мс
+loop Работа программы
+ T -> CPU: Прерывание каждые 1 мс
+ CPU -> CPU: osSystickHandler: tickCount++
+ opt Прошло не менее 10 мс
+  loop Строки R1 R2 R3 R4 до обнаружения клавиши
+   CPU -> G: BSRR: активная строка = 0
+   G -> K: Сигнал на строке
+   K -> G: Нажатие замыкает строку и столбец
+   CPU -> G: Чтение IDR столбцов C1 C2 C3
+   G --> CPU: Низкий уровень определяет клавишу
+   CPU -> G: BSRR: отпустить строку
+  end
+  CPU -> CPU: Подтвердить стабильность 30 мс\nОдин ввод до отпускания
+  alt Цифра от 0 до 9
+   CPU -> CPU: Запомнить или заменить операнд
+   CPU -> D: Передать коды сегментов цифры
+   CPU -> U: Operand: цифра
+  else Звездочка после первого операнда
+   CPU -> CPU: Цикл операций +, -, *, /
+   CPU -> U: Operation: знак
+  else Решетка при полном вводе
+   CPU -> CPU: Вычислить результат
+   alt Деление на ноль
+    CPU -> D: Коды сегментов Err
+    CPU -> U: Error: division by zero
+   else Допустимая операция
+    CPU -> D: Коды сегментов результата и минуса
+    CPU -> U: Операнды, операция и результат
+   end
+  end
+  U -> S: Символы через PA2 TX
+ end
+end
+note over CPU,D
+Передача TM1637 программная, младший бит первым.
+Такт ACK формируется, подтверждение не проверяется.
+end note
+@enduml

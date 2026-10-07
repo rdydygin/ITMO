@@ -1,0 +1,29 @@
+@startuml
+hide footbox
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 16
+skinparam sequenceMessageAlign center
+skinparam ParticipantBackgroundColor #F2F2F2
+skinparam ParticipantBorderColor black
+skinparam ArrowColor black
+participant "Ядро\nCortex M4" as CPU
+participant "SysTick\nRCC GPIO" as SYS
+participant "I2C1\nPB8 PB9" as BUS
+participant "OLED\n128 x 64" as OLED
+CPU -> SYS : HAL_Init и тактирование
+CPU -> SYS : Настройка GPIO
+CPU -> BUS : Настройка I2C1 100 кГц
+CPU -> CPU : Настройка USART6
+CPU -> BUS : Команды инициализации OLED
+BUS -> OLED : Адрес 0x3C и команды
+CPU -> CPU : Обнулить калькулятор\nСформировать буфер 1024 байта
+loop 8 страниц по 128 байт
+CPU -> BUS : Команды страницы и данные
+BUS -> OLED : Обновить изображение
+end
+note over CPU,SYS
+SysTick обновляет счетчик HAL каждую 1 мс.
+Он используется для задержек и измерения удержания.
+end note
+@enduml
