@@ -25,13 +25,9 @@
 
 * [Программирование](Semester1/Programming)
 
-* [Линейная алгебра](Semester1/LinearAlgebra)
-
 #### Семестр 2
 
 * [ОПД](Semester2/BasicsOfProfessionalActivity)
-
-* [КиК](Semester2/CommunicationAndTeambuilding)
 
 * [Базы данных](Semester2/Databases)
 
@@ -62,3 +58,19 @@
 * [Основы программной инженерии](Semester4/SEB)
 
 * [Математическая статистика](Semester4/Statistics)
+
+### Курс 3
+
+#### Семестр 5
+
+* [Системы искусственного интеллекта](Semester5/AISystems)
+
+* [Функциональная схемотехника](Semester5/CircuitDesign)
+
+* [Электроника](Semester5/Electronics)
+
+* [Встроенные системы](Semester5/EmbeddedSystems)
+
+* [Моделирование](Semester5/Modeling)
+
+* [Операционные системы](Semester5/OS-new)
