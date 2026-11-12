@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="785" height="256" viewBox="0 0 785 256" font-family="DejaVu Sans Mono, monospace" font-size="16">
+<rect width="785" height="256" fill="white"/>
+<line x1="125.0" y1="8" x2="125.0" y2="230" stroke="#bbb" stroke-width="0.6" stroke-dasharray="3,3"/>
+<text x="125.0" y="246" text-anchor="middle" fill="black">0</text>
+<line x1="280.0" y1="8" x2="280.0" y2="230" stroke="#bbb" stroke-width="0.6" stroke-dasharray="3,3"/>
+<text x="280.0" y="246" text-anchor="middle" fill="black">10</text>
+<line x1="435.0" y1="8" x2="435.0" y2="230" stroke="#bbb" stroke-width="0.6" stroke-dasharray="3,3"/>
+<text x="435.0" y="246" text-anchor="middle" fill="black">20</text>
+<line x1="590.0" y1="8" x2="590.0" y2="230" stroke="#bbb" stroke-width="0.6" stroke-dasharray="3,3"/>
+<text x="590.0" y="246" text-anchor="middle" fill="black">30</text>
+<line x1="745.0" y1="8" x2="745.0" y2="230" stroke="#bbb" stroke-width="0.6" stroke-dasharray="3,3"/>
+<text x="745.0" y="246" text-anchor="middle" fill="black">40</text>
+<text x="779" y="246" text-anchor="end" fill="black">нс</text>
+<text x="6" y="31.0" fill="black">d</text>
+<line x1="125.0" y1="36" x2="280.0" y2="36" stroke="black" stroke-width="1.6"/>
+<line x1="280.0" y1="14" x2="280.0" y2="36" stroke="black" stroke-width="1.6"/>
+<line x1="280.0" y1="14" x2="435.0" y2="14" stroke="black" stroke-width="1.6"/>
+<line x1="435.0" y1="14" x2="435.0" y2="36" stroke="black" stroke-width="1.6"/>
+<line x1="435.0" y1="36" x2="590.0" y2="36" stroke="black" stroke-width="1.6"/>
+<line x1="590.0" y1="14" x2="590.0" y2="36" stroke="black" stroke-width="1.6"/>
+<line x1="590.0" y1="14" x2="745.0" y2="14" stroke="black" stroke-width="1.6"/>
+<text x="6" y="67.0" fill="black">sel</text>
+<line x1="125.0" y1="72" x2="435.0" y2="72" stroke="black" stroke-width="1.6"/>
+<line x1="435.0" y1="50" x2="435.0" y2="72" stroke="black" stroke-width="1.6"/>
+<line x1="435.0" y1="50" x2="745.0" y2="50" stroke="black" stroke-width="1.6"/>
+<text x="6" y="103.0" fill="black">y0_assign</text>
+<line x1="125.0" y1="108" x2="280.0" y2="108" stroke="black" stroke-width="1.6"/>
+<line x1="280.0" y1="86" x2="280.0" y2="108" stroke="black" stroke-width="1.6"/>
+<line x1="280.0" y1="86" x2="435.0" y2="86" stroke="black" stroke-width="1.6"/>
+<line x1="435.0" y1="86" x2="435.0" y2="108" stroke="black" stroke-width="1.6"/>
+<line x1="435.0" y1="108" x2="745.0" y2="108" stroke="black" stroke-width="1.6"/>
+<text x="6" y="139.0" fill="black">y1_assign</text>
+<line x1="125.0" y1="144" x2="590.0" y2="144" stroke="black" stroke-width="1.6"/>
+<line x1="590.0" y1="122" x2="590.0" y2="144" stroke="black" stroke-width="1.6"/>
+<line x1="590.0" y1="122" x2="745.0" y2="122" stroke="black" stroke-width="1.6"/>
+<text x="6" y="175.0" fill="black">y0_always</text>
+<line x1="125.0" y1="180" x2="280.0" y2="180" stroke="black" stroke-width="1.6"/>
+<line x1="280.0" y1="158" x2="280.0" y2="180" stroke="black" stroke-width="1.6"/>
+<line x1="280.0" y1="158" x2="435.0" y2="158" stroke="black" stroke-width="1.6"/>
+<line x1="435.0" y1="158" x2="435.0" y2="180" stroke="black" stroke-width="1.6"/>
+<line x1="435.0" y1="180" x2="745.0" y2="180" stroke="black" stroke-width="1.6"/>
+<text x="6" y="211.0" fill="black">y1_always</text>
+<line x1="125.0" y1="216" x2="590.0" y2="216" stroke="black" stroke-width="1.6"/>
+<line x1="590.0" y1="194" x2="590.0" y2="216" stroke="black" stroke-width="1.6"/>
+<line x1="590.0" y1="194" x2="745.0" y2="194" stroke="black" stroke-width="1.6"/>
+</svg>
