@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="766" height="349" viewBox="0 0 766 349">
+  <defs>
+    <marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0L8 4L0 8Z" fill="#222"/>
+    </marker>
+  </defs>
+  <rect width="766" height="349" fill="white"/>
+  <style>
+    rect.state { fill: white; stroke: #222; stroke-width: 1.8; }
+    path.edge { fill: none; stroke: #222; stroke-width: 1.8; marker-end: url(#arrow); }
+    text { fill: #222; font-family: "DejaVu Sans", sans-serif; font-size: 16px; text-anchor: middle; }
+    text.node { font-family: "DejaVu Sans Mono", monospace; font-size: 17px; }
+    text.label { text-anchor: start; }
+  </style>
+    <rect class="state" x="48" y="81" width="164" height="38" rx="4"/>
+    <text class="node" x="130" y="106">IDLE</text>
+    <rect class="state" x="554" y="81" width="164" height="38" rx="4"/>
+    <text class="node" x="636" y="106">WAIT_SQUARE</text>
+    <rect class="state" x="48" y="243" width="164" height="38" rx="4"/>
+    <text class="node" x="130" y="268">WAIT_SUM</text>
+    <rect class="state" x="554" y="243" width="164" height="38" rx="4"/>
+    <text class="node" x="636" y="268">WAIT_CUBE</text>
+    <path class="edge" d="M5 100H48"/>
+    <path class="edge" d="M88 81C88 33 172 33 172 81"/>
+    <path class="edge" d="M594 81C594 33 678 33 678 81"/>
+    <path class="edge" d="M212 100H554"/>
+    <path class="edge" d="M636 119V243"/>
+    <path class="edge" d="M554 262H212"/>
+    <path class="edge" d="M130 243V119"/>
+    <path class="edge" d="M678 281C678 324 594 324 594 281"/>
+    <path class="edge" d="M172 281C172 324 88 324 88 281"/>
+    <text x="23" y="92">rst</text>
+    <text x="130" y="40">!start</text>
+    <text x="636" y="40">!mul_done</text>
+    <text x="383" y="90">start</text>
+    <text x="383" y="123">запуск квадрата и корня</text>
+    <text x="558" y="177">mul_done</text>
+    <text x="558" y="200">запуск куба</text>
+    <text x="383" y="251">mul_done &amp;&amp; root_ready</text>
+    <text x="383" y="285">запуск сложения</text>
+    <text x="213" y="177">add_done</text>
+    <text x="213" y="200">y, done = 1</text>
+    <text x="636" y="336">!(mul_done &amp;&amp; root_ready)</text>
+    <text x="130" y="336">!add_done</text>
+</svg>

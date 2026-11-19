@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="890" height="208" viewBox="0 0 890 208">
+  <defs>
+    <marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0L8 4L0 8Z" fill="#222"/>
+    </marker>
+  </defs>
+  <rect width="890" height="208" fill="white"/>
+  <g stroke="#222" stroke-width="1.8" fill="white">
+    <rect x="45" y="62" width="156" height="36" rx="4"/>
+    <rect x="339" y="62" width="156" height="36" rx="4"/>
+    <rect x="658" y="62" width="156" height="36" rx="4"/>
+    <rect x="658" y="132" width="156" height="36" rx="4"/>
+    <rect x="339" y="132" width="156" height="36" rx="4"/>
+    <rect x="658" y="185" width="156" height="21" rx="4"/>
+  </g>
+  <g stroke="#222" stroke-width="1.8" fill="none" marker-end="url(#arrow)">
+    <path d="M10 80H45"/>
+    <path d="M201 80H339"/>
+    <path d="M495 80H658"/>
+    <path d="M736 98V132"/>
+    <path d="M417 98V132"/>
+    <path d="M658 150H495"/>
+    <path d="M736 168V185"/>
+    <path d="M382 62C382 25 452 25 452 62"/>
+    <path d="M814 139C887 139 887 161 814 161"/>
+  </g>
+  <g font-family="DejaVu Sans Mono,monospace" font-size="16" fill="#222" text-anchor="middle">
+    <text x="123" y="86">START_SMALL</text>
+    <text x="417" y="86">WAIT_SMALL</text>
+    <text x="736" y="86">START_MAX</text>
+    <text x="736" y="156">WAIT_MAX</text>
+    <text x="417" y="156">FAILED</text>
+    <text x="736" y="201">PASSED</text>
+    <text x="26" y="72">rst</text>
+    <text x="270" y="72">start = 1</text>
+    <text x="577" y="72">done, y = 30</text>
+    <text x="577" y="141">done, ошибка</text>
+    <text x="417" y="28">!done</text>
+    <text x="850" y="128">!done</text>
+    <text x="675" y="119">start = 1</text>
+    <text x="481" y="119">done, ошибка</text>
+    <text x="803" y="181">done, верно</text>
+  </g>
+</svg>
